@@ -1,101 +1,51 @@
-# 邮件发送工具
+# 邮件发送器
 
-这是一个简单的邮件发送工具，支持多个收件人、自定义主题、HTML内容和添加附件。现在支持使用QQ邮箱作为SMTP服务器。
+这是一个使用 Flask 后端的邮件发送器应用。
 
-## 安装
+## 本地设置
 
-1. 确保你已安装Python 3.6+
-2. 安装依赖：
+1. 安装依赖：
    ```bash
    pip install -r requirements.txt
    ```
 
-## 配置
+2. 创建 `config.ini` 文件并填写以下内容：
+   ```ini
+   [SMTP]
+   server = your_smtp_server
+   port = your_smtp_port
+   username = your_email
+   password = your_email_password
+   sender_email = your_email
+   ```
 
-1. 复制 `config.ini.example` 为 `config.ini`
-2. 编辑 `config.ini`，填入你的QQ邮箱SMTP服务器信息和邮箱凭证
+3. 运行应用：
+   ```bash
+   python app.py
+   ```
 
-### QQ邮箱设置
+## Vercel 部署
 
-1. 登录你的QQ邮箱
-2. 点击"设置" -> "账户"
-3. 在"POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务"部分，开启"POP3/SMTP服务"
-4. 按照提示操作，获取授权码
-5. 在 `config.ini` 文件中，使用你的QQ邮箱地址作为username，使用获取到的授权码作为password
+1. 在 GitHub 上创建一个新的仓库，并将项目文件推送到该仓库。
+2. 在 Vercel 上注册账户并连接您的 GitHub 账户。
+3. 在 Vercel 中创建一个新项目，选择您的 GitHub 仓库。
+4. 在 Vercel 的环境变量设置中添加以下变量：
+   - SMTP_SERVER
+   - SMTP_PORT
+   - SMTP_USERNAME
+   - SMTP_PASSWORD
+   - SENDER_EMAIL
+5. 部署完成后，您将获得一个可访问的 URL。
 
 ## 使用
 
-运行以下命令：
-
-```bash
-python email_sender.py
-```
-
-然后按照提示输入收件人、主题、内容和附件信息。
+1. 访问应用 URL（本地或 Vercel 部署的 URL）。
+2. 填写收件人邮箱、邮件主题和内容。
+3. 点击"发送邮件"按钮。
+4. 等待发送结果提示。
 
 ## 注意事项
 
-- 确保你已经正确配置了QQ邮箱的SMTP服务并获取了授权码
-- 不要将包含敏感信息的 `config.ini` 文件提交到版本控制系统
-
-# 邮件服务器配置测试
-
-本项目包含一个用于测试邮件服务器配置的Python脚本。以下是详细的测试方法。
-
-## 准备工作
-
-1. 确保您的系统已安装Python 3.x版本。
-2. 将项目文件克隆或下载到本地目录。
-
-## 配置文件设置
-
-1. 打开`config.ini`文件。
-2. 检查并确保[SMTP]部分的配置正确:
-   - `server`: SMTP服务器地址
-   - `port`: SMTP服务器端口
-   - `username`: 您的邮箱账号
-   - `password`: 您的邮箱密码或授权码
-
-注意: 如果使用QQ邮箱,请确保使用的是授权码而不是登录密码。
-
-## 运行测试脚本
-
-1. 打开`test_email_config.py`文件。
-2. 在脚本中找到以下行:
-   ```python
-   receiver_email = "your_test_email@example.com"  # 替换为您的测试接收邮箱
-   ```
-   将`your_test_email@example.com`替换为您希望接收测试邮件的邮箱地址。
-
-3. 打开命令行终端,导航到项目目录。
-
-4. 运行以下命令执行测试脚本:
-   ```bash
-   python test_email_config.py
-   ```
-
-5. 观察命令行输出:
-   - 如果看到"测试邮件发送成功!"的消息,说明配置正确。
-   - 如果出现错误信息,请根据错误提示进行相应的调整。
-
-6. 检查您指定的接收邮箱,确认是否收到测试邮件。
-   注意: 有时测试邮件可能会被归类为垃圾邮件,请同时检查垃圾邮件文件夹。
-
-## 常见问题及解决方法
-
-1. 连接错误:
-   - 检查SMTP服务器地址和端口是否正确。
-   - 确保您的网络连接正常,没有被防火墙阻止。
-
-2. 认证失败:
-   - 确保用户名和密码正确。
-   - 如果使用QQ邮箱,请使用授权码而不是登录密码。
-
-3. SSL证书问题:
-   - 确保您的Python环境包含最新的SSL证书。
-   - 尝试更新您的Python版本。
-
-4. 发送限制:
-   - 某些邮件服务提供商可能有发送频率限制,请不要过于频繁地测试。
-
-如果您遇到其他问题或需要进一步的帮助,请查看错误信息并搜索相关解决方案,或联系项目维护者寻求支持。
+- 确保您的 SMTP 服务器允许应用程序访问。
+- 对于 Gmail，您可能需要启用"不太安全的应用程序访问"或使用应用程序密码。
+- 在生产环境中，建议使用环境变量而不是配置文件来存储敏感信息。
